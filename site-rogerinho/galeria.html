@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria de Projetos | Rogerinho Ramos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">RR</a>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#home">Início</a></li>
+        <li><a href="index.html#vision">Visão</a></li>
+        <li><a href="index.html#ecosystems">Ecossistemas</a></li>
+        <li><a href="index.html#projects">Projetos</a></li>
+        <li><a href="index.html#contact">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Galeria de Projetos</h2>
+    <p class="section-subtitle">Veja alguns dos trabalhos desenvolvidos por Rogerinho Ramos</p>
+
+    <div class="showcase-tabs">
+      <button class="tab-btn active" onclick="showGalleryTab('cnc')">CNC</button>
+      <button class="tab-btn" onclick="showGalleryTab('tech')">Tecnologia</button>
+      <button class="tab-btn" onclick="showGalleryTab('invest')">Investimentos</button>
+      <button class="tab-btn" onclick="showGalleryTab('spirit')">Espiritualidade</button>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Substitua as URLs abaixo pelas imagens reais na pasta assets/images usando os nomes entre parênteses -->
+      <div class="gallery-item" data-tab="cnc">
+        <img src="https://via.placeholder.com/600x400?text=Imagem+CNC" alt="CNC Projeto 1">
+        <!-- Exemplo de uso local: assets/images/cnc1.jpg -->
+        <div class="gallery-caption">Centro de Usinagem MAZAK</div>
+      </div>
+      <div class="gallery-item" data-tab="tech">
+        <img src="https://via.placeholder.com/600x400?text=Dashboard" alt="Sistema de Gestão">
+        <!-- Exemplo de uso local: assets/images/tech1.jpg -->
+        <div class="gallery-caption">Dashboard BI Interativo</div>
+      </div>
+      <div class="gallery-item" data-tab="invest">
+        <img src="https://via.placeholder.com/600x400?text=Trading+Bot" alt="Trading Bot">
+        <!-- Exemplo de uso local: assets/images/invest1.jpg -->
+        <div class="gallery-caption">Robô de Trading MT5</div>
+      </div>
+      <div class="gallery-item" data-tab="spirit">
+        <img src="https://via.placeholder.com/600x400?text=Minist%C3%A9rio" alt="Ministério">
+        <!-- Exemplo de uso local: assets/images/spirit1.jpg -->
+        <div class="gallery-caption">Liderança Cristã</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; text-align: center;">
+      <a href="index.html" class="btn btn-secondary"><i class="fas fa-home"></i> Voltar para Home</a>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <h2 class="section-title">Fale Comigo</h2>
+    <p class="section-subtitle">Envie uma mensagem e receba resposta no seu e-mail</p>
+    <div class="contact-container">
+      <div class="contact-form">
+        <form id="contact-form">
+          <input type="text" name="nome" placeholder="Seu nome" required />
+          <input type="email" name="email" placeholder="Seu e-mail" required />
+          <textarea name="mensagem" placeholder="Escreva sua mensagem..." rows="5" required></textarea>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+          <p id="form-status" style="margin-top: 1rem; font-size: 0.9rem;"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Rogério Costa Ramos. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    function showGalleryTab(tab) {
+      const items = document.querySelectorAll('.gallery-item');
+      const buttons = document.querySelectorAll('.tab-btn');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[onclick="showGalleryTab('${tab}')"]`).classList.add('active');
+
+      items.forEach(item => {
+        item.style.display = item.dataset.tab === tab ? 'block' : 'none';
+      });
+    }
+
+    window.onload = () => {
+      showGalleryTab('cnc');
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("form-status");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        status.textContent = "Enviando mensagem...";
+
+        const formData = new FormData(form);
+
+        fetch("https://script.google.com/macros/s/AKfycbxw-pKFFTrjHHryPdaKAl9lHG_tpgztntcUVqjaBBBfaai0Jg4skZ1H8868jxl6WJ3d/exec", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.text())
+        .then(text => {
+          if (text.includes("sucesso")) {
+            status.textContent = "Mensagem enviada com sucesso! ✅";
+            form.reset();
+          } else {
+            status.textContent = "Houve um problema no envio. Tente novamente.";
+          }
+        })
+        .catch(error => {
+          console.error("Erro:", error);
+          status.textContent = "Erro ao enviar. Tente mais tarde.";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
